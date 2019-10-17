@@ -5,7 +5,7 @@ file=pd.read_excel("akshat.xlsx")
 
 file['1']=file.iloc[:,:].apply(lambda x:' '.join(x.astype(str)), axis=1)
 
-file['contact'] = file['1'].str.extract('(\d\d\d\d\d\d\d\d\d\d)', expand=True)
+file['contact'] = file['1'].str.extract('(\d\d\d\d\d\d\d\d\d\d)', expand=True) # extracting 10 digits(contact number) from excel sheet
 
 print(file['contact'])
 
@@ -37,21 +37,12 @@ def input_contacts():
 
 def input_message():
     global message
-    # Enter your message
     print()
-    ##    message = input("Enter your message: \n")
-
-    #message =input
-
     print(message)
 
 def whatsapp_login():
-    global wait, browser, Link
-##    Link = "https://web.whatsapp.com/"
+    global wait, browser
     browser = webdriver.Firefox(executable_path="geckodriver.exe")
-##    wait = WebDriverWait(browser, 6)
-##    browser.get(Link)
-##    browser.maximize_window()
     print("QR scanned")
 
 def send_unsaved_contact_message():
@@ -70,16 +61,12 @@ def send_unsaved_contact_message():
         print("Message sent successfuly")
 
     except NoSuchElementException:
-        # if browser.find_elements_by_xpath('//*[@id="pane-side"]'):  # _1c8mz _1RYPC
-        # contacts_with_error.append(unsaved_Contacts)
-        # print(unsaved_Contacts + "is not valid")
         print("Failed to send message")
     return
 
 def sender():
     global unsaved_Contacts
     if len(unsaved_Contacts) > 0:
-##        browser = webdriver.Firefox(executable_path="geckodriver.exe")
         for i in unsaved_Contacts:
             try:
                 link = 'https://api.whatsapp.com/send?phone=91' + i + '&text=&source=&data='
@@ -91,7 +78,7 @@ def sender():
                 time.sleep(2)
                 print("Sending message to", i)
                 send_unsaved_contact_message()
-                time.sleep(3)
+                time.sleep(30)
             except:
                 contacts_with_error = []
                 lt = contacts_with_error.append(i)
@@ -113,4 +100,5 @@ whatsapp_login()
 # Send message to all Contact List
 sender()
 
-# message sending Task Complete    #     print("Task Completed")
+# message sending Task Complete
+print("Task Completed")
